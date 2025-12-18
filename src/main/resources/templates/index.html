@@ -1,7 +1,11 @@
-<div xmlns:th="http://www.thymeleaf.org"
-     th:fragment="indexContent">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body th:replace="~{layout :: common_layout(~{::main_section})}">
 
-    <h1>首页</h1>
-    <p>这是 index 页面</p>
+<main th:fragment="main_section">
+    <h2>我是首页</h2>
+    <p>你好，<span th:text="${name}">用户</span>！这是我的独立内容。</p>
+</main>
 
-</div>
+</body>
+</html>
