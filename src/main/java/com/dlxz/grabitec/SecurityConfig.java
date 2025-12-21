@@ -23,7 +23,20 @@ public class SecurityConfig {
                         .permitAll() // 注册接口允许访问
                         .anyRequest().authenticated() // 其他接口需要 session 登录
                 )
-                .formLogin(AbstractHttpConfigurer::disable)
+                // 2. 登录配置
+                .formLogin(form -> form
+                        .loginPage("/adminlte/login")               // 自定义登录页面的访问路径 (Controller 映射)
+                        .loginProcessingUrl("/doLogin")    // 登录表单提交到的 URL (Thymeleaf 页面中 action 的值)
+                        .defaultSuccessUrl("/adminlte/index", true) // 登录成功后跳转的页面
+                        .failureUrl("/login?error=true")   // 登录失败跳转的页面
+                        .permitAll()
+                )
+                // 3. 注销配置
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout=true")
+                        .permitAll()
+                )
                 .httpBasic(AbstractHttpConfigurer::disable);
 
         return http.build();
